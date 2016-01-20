@@ -37,8 +37,8 @@ $ npm install super-queue --save
 import {Producer} from 'super-queue';
 
 const p = new Producer({
-  // 生产者名称，默认自动生成
-  name: 'producer_xxx',
+  // 队列名称
+  queue: 'my_queue',
   // 设置Redis数据库连接
   redis: {host: 'localhost', port: 6379, db: 0},
   // 默认的消息有效时间(s)，为0表示永久
@@ -72,8 +72,8 @@ p.exit();
 import {Consumer} from 'super-queue';
 
 const c = new Consumer({
-  // 消费者名称，默认自动生成
-  name: 'consumer_xxx',
+  // 队列名称
+  queue: 'my_queue',
   // 设置Redis数据库连接
   redis: {host: 'localhost', port: 6379, db: 0},
   // 处理能力，如果当前消费者正在处理的消息数量超过该值则不再接收新消息，为0表示不限制
@@ -103,8 +103,8 @@ c.exit();
 import {Monitor} from 'super-queue';
 
 const m = new Monitor({
-  // 监视器名称，默认自动生成
-  name: 'monitor_xxx',
+  // 队列名称
+  queues: ['my_queue', 'my_queue2'],
   // 设置Redis数据库连接
   redis: {host: 'localhost', port: 6379, db: 0},
 });
