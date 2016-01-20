@@ -4,7 +4,8 @@
   "description": "基于Redis的简单消息队列模块（Node.js）",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -t 5000",
+    "converage": "export NODE_TEST='super-queue' && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -t 5000",
+    "test": "export NODE_TEST='super-queue' && ./node_modules/.bin/mocha -t 5000",
     "changelog": "./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
   },
   "repository": {
