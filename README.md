@@ -62,6 +62,11 @@ p.push({data, maxAge})
   .then(result => console.log(result))
   .catch(err => console.error(err));
 
+// 初始化成功，触发start事件
+p.on('start', () => {
+  console.log('start working');
+});
+
 // 退出
 p.exit();
 ```
