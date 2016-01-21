@@ -46,15 +46,15 @@ const p = new Producer({
 });
 
 // 消息入队
-const data = {a: 123}; // 消息内容，必须为可被JSON序列化的值
-const maxAge = 10;     // 消息有效时间，当省略此参数时使用默认的maxAge值
-p.push({data, maxAge}, (err, result) => {
+const data = 'abcdefg'; // 消息内容，必须为字符串类型
+const maxAge = 10;      // 消息有效时间，当省略此参数时使用默认的maxAge值
+p.push({data, maxAge}, (err, ret) => {
   if (err) {
     // 消息处理出错
     console.error(err);
   } else {
     // 消息的处理结果
-    console.log(result);
+    console.log(ret);
   }
 });
 // 可使用Promise方式
@@ -83,7 +83,7 @@ const c = new Consumer({
 // 监听队列
 c.listen(msg => {
   // msg.data = 消息内容
-  // msg.maxAge = 消息有效期
+  // msg.expire = 消息过期秒时间戳
   // msg.reject(err) 消息处理出错
   // msg.resolve(result) 消息处理成功
 });
