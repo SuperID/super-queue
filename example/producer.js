@@ -16,3 +16,18 @@ const p = new Producer({
     prefix: 'example:',
   }
 });
+
+p.on('start', () => {
+  console.log('start');
+
+  let count = 0;
+
+  for (let i = 0; i < 1000; i++) {
+    p.push({
+      data: `hello ${i} times`,
+    }, (err, ret) => {
+      console.log(count++, err, ret);
+    });
+  }
+
+});
