@@ -118,29 +118,15 @@ const m = new Monitor({
   interval: 2,
 });
 
-m.on('producerUp', info => {
-  // info.name 生产者的名称
-  // info.startedAt 生产者启动秒时间戳
-  // info.uptime 生产者已启动的秒数
-  // info.msgTotal 已产生的消息数量
-  // info.msgError 已产生的消息失败数量
-  // info.msgExpired 已产生的消息过期数量
-  // info.msgSuccess 已产生的消息成功数量
+m.on('producerUp', name => {
+  console.log('生产者%s已上线', name);
 });
-m.on('producerDown', info => /* 同上 */);
+m.on('producerDown', name => /* 同上 */);
 
-m.on('consumerUp', info => {
-  // info.name 消费者的名称
-  // info.startedAt 消费者启动秒时间戳
-  // info.uptime 消费者已启动的秒数
-  // info.msgTotal 已处理的消息数量
-  // info.msgError 已处理的消息失败数量
-  // info.msgExpired 已处理的消息过期数量
-  // info.msgSuccess 已处理的消息成功数量
-  // info.capacity 系统容量
-  // info.processingCount 正在处理的消息数量
+m.on('consumerUp', name => {
+  console.log('消费者%s已上线', name);
 });
-m.on('consumerDown', info => /* 同上 */);
+m.on('consumerDown', name => /* 同上 */);
 
 // 获取客户端状态
 m.clientStatus((err, info) => {
