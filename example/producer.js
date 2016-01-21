@@ -14,7 +14,8 @@ const p = new Producer({
     host: '127.0.0.1',
     port: 6379,
     prefix: 'example:',
-  }
+  },
+  maxAge: 2,
 });
 
 p.on('start', () => {
