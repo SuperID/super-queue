@@ -43,6 +43,8 @@ const p = new Producer({
   redis: {host: 'localhost', port: 6379, db: 0},
   // 默认的消息有效时间(s)，为0表示永久
   maxAge: 0,
+  // 心跳时间周期（s），默认2秒
+  heartbeat: 2,
 });
 
 // 消息入队
@@ -83,6 +85,8 @@ const c = new Consumer({
   redis: {host: 'localhost', port: 6379, db: 0},
   // 处理能力，如果当前消费者正在处理的消息数量超过该值则不再接收新消息，为0表示不限制
   capacity: 0,
+  // 心跳时间周期（s），默认2秒
+  heartbeat: 2,
 });
 
 // 监听队列
@@ -108,11 +112,9 @@ c.exit();
 import {Monitor} from 'super-queue';
 
 const m = new Monitor({
-  // 队列名称
-  queues: ['my_queue', 'my_queue2'],
   // 设置Redis数据库连接
   redis: {host: 'localhost', port: 6379, db: 0},
-  // 自动检查时间间隔（s）
+  // 自动检查时间间隔（s），默认为2秒
   interval: 2,
 });
 
@@ -135,7 +137,7 @@ m.on('consumerUp', info => {
 m.on('consumerDown', info => /* 同上 */);
 
 // 获取系统状态
-m.stat((err, info) => {
+m.status((err, info) => {
   if (err) {
     console.error(err);
   } else {
