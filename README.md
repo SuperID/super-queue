@@ -125,7 +125,7 @@ m.on('producerUp', info => {
   // info.msgTotal 已产生的消息数量
   // info.msgError 已产生的消息失败数量
   // info.msgExpired 已产生的消息过期数量
-  // info.msgSuccess 已产生的消息成功处理数量
+  // info.msgSuccess 已产生的消息成功数量
 });
 m.on('producerDown', info => /* 同上 */);
 
@@ -136,19 +136,28 @@ m.on('consumerUp', info => {
   // info.msgTotal 已处理的消息数量
   // info.msgError 已处理的消息失败数量
   // info.msgExpired 已处理的消息过期数量
-  // info.msgSuccess 已处理的消息成功处理数量
+  // info.msgSuccess 已处理的消息成功数量
   // info.capacity 系统容量
   // info.processingCount 正在处理的消息数量
 });
 m.on('consumerDown', info => /* 同上 */);
 
-// 获取系统状态
+// 获取客户端状态
 m.clientStatus((err, info) => {
   if (err) {
     console.error(err);
   } else {
     // info.producers   生产者列表，同producerUp的info
     // info.consumers   消费者列表，同consumerUp的info
+  }
+});
+
+// 获取队列状态
+m.queueStatus((err, list) => {
+  if (err) {
+    console.error(err);
+  } else {
+    // list 等待队列，包含信息：{name, length}
   }
 });
 

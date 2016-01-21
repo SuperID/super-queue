@@ -18,4 +18,5 @@ const m = new Monitor({
 });
 
 
-setInterval(() => m.clientStatus(console.log), 2000);
+//setInterval(() => m.clientStatus(console.log), 2000);
+setInterval(() => m.queueStatus(console.log), 2000);
