@@ -15,7 +15,7 @@ const p = new Producer({
     port: 6379,
     prefix: 'example:',
   },
-  maxAge: 2,
+  maxAge: 20,
 });
 
 p.on('start', () => {
@@ -24,11 +24,14 @@ p.on('start', () => {
   let count = 0;
 
   for (let i = 0; i < 1000; i++) {
-    p.push({
-      data: `hello ${i} times`,
-    }, (err, ret) => {
-      console.log(count++, err, ret);
-    });
+    setTimeout(() => {
+      p.push({
+        data: `hello ${i} times`,
+        maxAge: Math.random() * 2,
+      }, (err, ret) => {
+        console.log(count++, err, ret);
+      });
+    }, Math.random() * 1000 + i * 10);
   }
 
 });

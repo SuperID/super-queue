@@ -15,11 +15,11 @@ const c = new Consumer({
     port: 6379,
     prefix: 'example:',
   },
-  capacity: 1,
+  capacity: 10,
 });
 
 c.listen(msg => {
   console.log(msg);
   //msg.resolve('fuck');
-  setTimeout(() => msg.resolve(`fuck ${msg.data}`), Math.random() * 100);
+  setTimeout(() => msg.resolve(`fuck ${msg.data}`), Math.random() * 1000);
 });

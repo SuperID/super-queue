@@ -122,7 +122,10 @@ m.on('producerUp', info => {
   // info.name 生产者的名称
   // info.startedAt 生产者启动秒时间戳
   // info.uptime 生产者已启动的秒数
-  // info.count 已产生的消息数量
+  // info.msgTotal 已产生的消息数量
+  // info.msgError 已产生的消息失败数量
+  // info.msgExpired 已产生的消息过期数量
+  // info.msgSuccess 已产生的消息成功处理数量
 });
 m.on('producerDown', info => /* 同上 */);
 
@@ -130,19 +133,20 @@ m.on('consumerUp', info => {
   // info.name 消费者的名称
   // info.startedAt 消费者启动秒时间戳
   // info.uptime 消费者已启动的秒数
-  // info.count 已处理的消息数量
+  // info.msgTotal 已处理的消息数量
+  // info.msgError 已处理的消息失败数量
+  // info.msgExpired 已处理的消息过期数量
+  // info.msgSuccess 已处理的消息成功处理数量
   // info.capacity 系统容量
   // info.processingCount 正在处理的消息数量
 });
 m.on('consumerDown', info => /* 同上 */);
 
 // 获取系统状态
-m.status((err, info) => {
+m.clientStatus((err, info) => {
   if (err) {
     console.error(err);
   } else {
-    // info.lastChecked 最后检查时间戳（s）
-    // info.queueLength 队列长度
     // info.producers   生产者列表，同producerUp的info
     // info.consumers   消费者列表，同consumerUp的info
   }
