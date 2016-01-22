@@ -28,9 +28,8 @@ p.on('start', () => {
       p.push({
         data: `hello ${i} times`,
         maxAge: Math.random() * 2,
-      }, (err, ret) => {
-        console.log(count++, err, ret);
-      });
+      }).then(ret => { count++; console.log(count, ret); })
+      .catch(err => { count++; console.log(count, err); });
     }, Math.random() * 1000 + i * 10);
   }
 
