@@ -118,15 +118,17 @@ const m = new Monitor({
   interval: 2,
 });
 
-m.on('producerUp', name => {
-  console.log('生产者%s已上线', name);
+m.on('producerUp', info => {
+  // info.queue 队列名称
+  // info.name  生产者名称
 });
-m.on('producerDown', name => /* 同上 */);
+m.on('producerDown', info => /* 同上 */);
 
-m.on('consumerUp', name => {
-  console.log('消费者%s已上线', name);
+m.on('consumerUp', info => {
+  // info.queue 队列名称
+  // info.name  消费者名称
 });
-m.on('consumerDown', name => /* 同上 */);
+m.on('consumerDown', info => /* 同上 */);
 
 // 获取客户端状态
 m.clientStatus((err, info) => {
