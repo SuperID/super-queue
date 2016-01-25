@@ -65,6 +65,7 @@ p.push({data, maxAge})
   .catch(err => console.error(err));
 
 // 初始化成功，触发start事件
+// 注意：一定要在触发此事件后再使用push()，否则可能无法收到消息处理结果
 p.on('start', () => {
   console.log('start working');
 });
