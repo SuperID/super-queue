@@ -17,7 +17,7 @@ function generateOptions(options) {
   options.queue = utils.date('Ymd_His_') + utils.randomString(10);
   options.redis = {
     host: '127.0.0.1',
-    port: 6378,
+    port: 6379,
     db: 15,
     prefix: 'TEST:',
   };

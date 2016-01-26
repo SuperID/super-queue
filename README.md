@@ -96,6 +96,7 @@ c.listen(msg => {
   // msg.expire = 消息过期秒时间戳
   // msg.reject(err) 消息处理出错
   // msg.resolve(result) 消息处理成功
+  // msg.checkTimeout(callback) 检查执行是否超时，如果在expire之后的时间还没有响应，则自动响应一个MessageProcessingTimeoutError，并执行回调函数
 });
 
 // 退出
