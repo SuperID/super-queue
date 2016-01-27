@@ -1,6 +1,6 @@
 {
   "name": "super-queue",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "基于Redis的简单消息队列模块（Node.js）",
   "main": "lib/index.js",
   "scripts": {
