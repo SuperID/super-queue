@@ -2,3 +2,8 @@ language: node_js
 node_js:
   - 4.0
   - 5.0
+  - 6.0
+services:
+  - redis-server
+after_script:
+  - npm run coverage
