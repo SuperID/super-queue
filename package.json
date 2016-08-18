@@ -36,7 +36,7 @@
     "debug": "^2.2.0",
     "ioredis": "^2.3.0",
     "lei-promise": "0.0.4",
-    "lei-utils": "^2.1.0"
+    "lei-utils": "^2.2.0"
   },
   "devDependencies": {
     "conventional-changelog": "^1.1.0",
