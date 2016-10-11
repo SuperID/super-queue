@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "基于Redis的简单消息队列模块（Node.js）",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "coverage": "istanbul cover _mocha -- -t 10000",
     "test-debug": "export DEBUG='super-queue:*' && mocha -t 10000",
