@@ -18,9 +18,9 @@ const m = new Monitor({
 });
 
 
-//setInterval(() => m.check(), 2000);
-//setInterval(() => m.clientStatus(console.log), 2000);
-//setInterval(() => m.queueStatus(console.log), 2000);
+// setInterval(() => m.check(), 2000);
+// setInterval(() => m.clientStatus(console.log), 2000);
+// setInterval(() => m.queueStatus(console.log), 2000);
 
 m.on('producerUp', n => console.log('producerUp', n));
 m.on('producerDown', n => console.log('producerDown', n));

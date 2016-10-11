@@ -7,7 +7,7 @@ const MOCHA = path.resolve(__dirname, 'node_modules/.bin/mocha');
 const NODE_4 = '4.6.0';
 const NODE_6 = '6.7.0';
 
-env.DEBUG = 'super-queue:*';
+// env.DEBUG = 'super-queue:*';
 
 function lint() {
   console.log(color.green(`执行 eslint 格式化代码...`));

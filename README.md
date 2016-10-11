@@ -34,7 +34,9 @@ $ npm install super-queue --save
 ### 生产者 Producer
 
 ```javascript
-import {Producer} from 'super-queue';
+'use strict';
+
+const Producer = require('super-queue').Producer;
 
 const p = new Producer({
   // 队列名称
@@ -60,10 +62,6 @@ p.push({data, maxAge}, (err, ret) => {
     console.log(ret);
   }
 });
-// 可使用Promise方式
-p.push({data, maxAge})
-  .then(result => console.log(result))
-  .catch(err => console.error(err));
 
 // 初始化成功，触发start事件
 // 注意：一定要在触发此事件后再使用push()，否则可能无法收到消息处理结果
@@ -78,7 +76,9 @@ p.exit();
 ### 消费者 Consumer
 
 ```javascript
-import {Consumer} from 'super-queue';
+'use strict';
+
+const Consumer = require('super-queue').Consumer;
 
 const c = new Consumer({
   // 队列名称
@@ -112,7 +112,9 @@ c.exit();
 + 监控队列长度，当超过指定值时自动清理部分最早入队但未处理的消息，并通知相应的生产者
 
 ```javascript
-import {Monitor} from 'super-queue';
+'use strict';
+
+const Monitor = require('super-queue').Monitor;
 
 const m = new Monitor({
   // 设置Redis数据库连接
@@ -155,6 +157,65 @@ m.queueStatus((err, list) => {
 // 退出
 m.exit();
 ```
+
+
+## Promise 支持
+
+本模块同时提供了返回`Promise`对象的接口，但其不能与`callback`混用。以下为使用`Promise`接口的例子：
+
+```javascript
+'use strict';
+
+// 使用模块输出的promise属性下的Producer
+const Producer = require('super-queue').promise.Producer;
+
+// 用法一样
+const p = new Producer({
+  // 队列名称
+  queue: 'my_queue',
+  // 设置Redis数据库连接
+  redis: {host: 'localhost', port: 6379, db: 0},
+  // 默认的消息有效时间(s)，为0表示永久
+  maxAge: 0,
+  // 心跳时间周期（s），默认2秒
+  heartbeat: 2,
+});
+
+// 消息入队
+const data = 'abcdefg'; // 消息内容，必须为字符串类型
+const maxAge = 10;      // 消息有效时间，当省略此参数时使用默认的maxAge值
+// 不需要传递callback参数，其他用法跟原来一样
+p.push({data, maxAge}).then(ret => {
+  // 消息的处理结果
+  console.log(ret);
+}).catch(err => {
+  // 消息处理出错
+  // 如果超过指定时间消费者未返回处理结果，则会返回MessageProcessingTimeoutError
+  console.error(err);
+});
+
+// 返回的Promise对象使用的是bluebird模块，如果一定要使用callback可使用其asCallback()方法
+p.push({data, maxAge}).asCallback((err, ret) => {
+  if (err) {
+    // 消息处理出错
+    // 如果超过指定时间消费者未返回处理结果，则会返回MessageProcessingTimeoutError
+    console.error(err);
+  } else {
+    // 消息的处理结果
+    console.log(ret);
+  }
+});
+
+// 初始化成功，触发start事件
+// 注意：一定要在触发此事件后再使用push()，否则可能无法收到消息处理结果
+p.on('start', () => {
+  console.log('start working');
+});
+
+// 退出
+p.exit();
+```
+
 
 ## License
 

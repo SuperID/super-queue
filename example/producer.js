@@ -26,7 +26,7 @@ p.on('start', () => {
   for (let i = 0; i < 1000; i++) {
     setTimeout(() => {
       p.push({
-        data: `hello ${i} times`,
+        data: `hello ${ i } times`,
         maxAge: Math.random() * 2,
       }).then(ret => { count++; console.log(count, ret); })
       .catch(err => { count++; console.log(count, err); });

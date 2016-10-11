@@ -20,6 +20,6 @@ const c = new Consumer({
 
 c.listen(msg => {
   console.log(msg);
-  //msg.resolve('fuck');
-  setTimeout(() => msg.resolve(`fuck ${msg.data}`), Math.random() * 1000);
+  // msg.resolve('fuck');
+  setTimeout(() => msg.resolve(`fuck ${ msg.data }`), Math.random() * 1000);
 });

@@ -9,7 +9,8 @@
 const assert = require('assert');
 const Consumer = require('../').Consumer;
 const Producer = require('../').Producer;
-const Monitor = require('../').Monitor;
+const PromiseConsumer = require('../').promise.Consumer;
+const PromiseProducer = require('../').promise.Producer;
 const utils = require('../lib/utils');
 
 function generateOptions(options) {
@@ -29,7 +30,7 @@ function merge(a, b) {
 }
 
 function exit() {
-  let args = Array.prototype.slice.call(arguments);
+  const args = Array.prototype.slice.call(arguments);
   const done = args.pop();
   Promise.all(args).then(ret => done()).catch(done);
 }
@@ -51,7 +52,7 @@ describe('normal', function () {
     });
 
     p.on('start', () => {
-      p.push({data: 'hello'}, (err, ret) => {
+      p.push({ data: 'hello' }, (err, ret) => {
         assert.equal(err, null);
         assert.equal(ret.result, 'ok');
 
@@ -77,7 +78,7 @@ describe('normal', function () {
     });
 
     p.on('start', () => {
-      p.push({data: 'hello'}, (err, ret) => {
+      p.push({ data: 'hello' }, (err, ret) => {
         assert.equal(err.message, 'fail');
 
         assert.equal(status.received, true);
@@ -100,7 +101,7 @@ describe('normal', function () {
     }, 2000);
 
     p.on('start', () => {
-      p.push({data: 'hello', maxAge: 1}, (err, ret) => {
+      p.push({ data: 'hello', maxAge: 1 }, (err, ret) => {
         assert.equal(err.code, 'msg_expired');
 
         exit(c.exit(), p.exit(), done);
@@ -126,7 +127,7 @@ describe('normal', function () {
       const MAX = 10000;
       let retCount = 0;
       for (let i = 0; i < MAX; i++) {
-        p.push({data: i.toString()}, (err, ret) => {
+        p.push({ data: i.toString() }, (err, ret) => {
           assert.equal(err, null);
           retCount++;
           check();
@@ -146,8 +147,8 @@ describe('normal', function () {
   it('#5 promise method', function (done) {
 
     const options = generateOptions();
-    const c = new Consumer(merge(options, {}));
-    const p = new Producer(merge(options, {}));
+    const c = new PromiseConsumer(merge(options, {}));
+    const p = new PromiseProducer(merge(options, {}));
 
     const status = {};
 
@@ -158,7 +159,7 @@ describe('normal', function () {
     });
 
     p.on('start', () => {
-      p.push({data: 'hello'})
+      p.push({ data: 'hello' })
         .then(ret => {
           assert.equal(ret.result, 'ok');
           assert.equal(status.received, true);
@@ -166,6 +167,31 @@ describe('normal', function () {
           exit(c.exit(), p.exit(), done);
         })
         .catch(done);
+    });
+
+  });
+
+  it('#5 promise method #asCallback', function (done) {
+
+    const options = generateOptions();
+    const c = new PromiseConsumer(merge(options, {}));
+    const p = new PromiseProducer(merge(options, {}));
+
+    const status = {};
+
+    c.listen(msg => {
+      status.received = true;
+      assert.equal(msg.data, 'hello');
+      msg.resolve('ok');
+    });
+
+    p.on('start', () => {
+      p.push({ data: 'hello' }).asCallback((err, ret) => {
+        assert.equal(err, null);
+        assert.equal(ret.result, 'ok');
+        assert.equal(status.received, true);
+        exit(c.exit(), p.exit(), done);
+      });
     });
 
   });
