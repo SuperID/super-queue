@@ -41,3 +41,6 @@ register('test', '单元测试', function () {
   console.log(color.green(`全部测试通过！`));
 });
 
+register('test6', `Node v${ NODE_6 } 下的单元测试`, function () {
+  test6();
+});

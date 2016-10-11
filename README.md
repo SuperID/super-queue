@@ -53,6 +53,7 @@ const maxAge = 10;      // 消息有效时间，当省略此参数时使用默�
 p.push({data, maxAge}, (err, ret) => {
   if (err) {
     // 消息处理出错
+    // 如果超过指定时间消费者未返回处理结果，则会返回MessageProcessingTimeoutError
     console.error(err);
   } else {
     // 消息的处理结果
