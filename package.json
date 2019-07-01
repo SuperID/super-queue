@@ -1,6 +1,6 @@
 {
   "name": "super-queue",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "基于Redis的简单消息队列模块（Node.js）",
   "main": "lib/index.js",
   "files": [
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "conventional-changelog": "^1.1.0",
+    "eslint-config-lei": "0.0.16",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0"
   }
